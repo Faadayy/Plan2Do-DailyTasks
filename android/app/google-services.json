@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "792065039504",
+    "project_id": "plan2do-87635",
+    "storage_bucket": "plan2do-87635.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:792065039504:android:36d3bb00b5112df8aa0c15",
+        "android_client_info": {
+          "package_name": "com.plan2do"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "792065039504-4hs0en5b1knrqs8mnin5fhi4usikrsie.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.plan2do",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "792065039504-5c83fmltjts32ke54u3v6ik0580cinit.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMS6gojH5fl-pxKrrFvRZEu7bFP2okzN8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "792065039504-5c83fmltjts32ke54u3v6ik0580cinit.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
