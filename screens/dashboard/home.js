@@ -241,7 +241,7 @@ export default function DashBoard({ navigation }) {
                     padding: 2,
                 }}>
                     <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-                        <Image style={styles.image} source={require('../../assets/images/dummyPhoto.png')} />
+                        <Image style={styles.image} source={{ uri: auth().currentUser.photoURL }} />
                     </TouchableOpacity>
                 </View>
             </View>

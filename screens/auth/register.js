@@ -34,8 +34,18 @@ export default function Splash({ navigation }) {
     useEffect(() => {
         clearFields()
         resetErrorMessages()
+
+        return () => {
+            clearFields()
+            resetErrorMessages()
+        }
     }, [])
 
+
+    //Function to correct email
+    const removeSpaces = (str) => {
+        return str.replace(/\s/g, '');
+    }
 
     //Register Button Function which validates the input
     const verifyDetails = () => {
@@ -79,14 +89,19 @@ export default function Splash({ navigation }) {
 
     const sendLink = async () => {
         const val = await auth().currentUser.sendEmailVerification()
+            .then(async () => {
+                console.log('Sent')
+                // await auth().signOut()
+            })
         const user = auth().currentUser;
         setLoading(false)
         clearFields()
         setLinkMessageVisible(true)
         const match = await user.updateProfile({
             displayName: fullName,
+            photoURL: 'https://i.ibb.co/Fmv63nx/dummy-Photo.png'
         });
-        const database = await database.collection('users').doc(user.uid).set({
+        const databasee = await database.collection('users').doc(user.uid).set({
             displayName: fullName,
             data: []
         })
@@ -95,8 +110,9 @@ export default function Splash({ navigation }) {
     const registerButton = async () => {
         if (verifyDetails()) {
             setLoading(true)
+            // if (!auth().currentUser) {
             auth()
-                .createUserWithEmailAndPassword(email, password)
+                .createUserWithEmailAndPassword(removeSpaces(email), password)
                 .then(() => {
                     sendLink()
                 })
@@ -108,7 +124,13 @@ export default function Splash({ navigation }) {
                     if (error.code === 'auth/invalid-email') {
                         console.log('That email address is invalid!');
                     }
-                });
+                }).finally(() => {
+                    setLoading(false)
+
+                })
+            // } else {
+            //     const res = await auth().signOut()
+            // }
         }
     }
 
@@ -123,6 +145,7 @@ export default function Splash({ navigation }) {
         setPassMisMatch(false)
         setWeakPass(false)
         setEmailinUseError(false)
+        setLinkMessageVisible(false)
     }
 
     //Function to clear user enetered details
@@ -195,7 +218,6 @@ export default function Splash({ navigation }) {
                         {passMismatch && <Text style={styles.errorMessages}>Passwords do not match</Text>}
                         {weakPass && <Text style={styles.errorMessages}>Weak Password. Enter a strong password</Text>}
                         {emailinUseError && <Text style={styles.errorMessages}>That email address is already in use!</Text>}
-
                     </View>
 
                     {linkMessageVisible && <Text style={[styles.errorMessages, { marginLeft: 0, width: '70%' }]}>Please verify your email with the link sent to your email.</Text>}
