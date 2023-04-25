@@ -98,7 +98,10 @@ export default function Login({ navigation }) {
                     if (error.code === 'auth/wrong-password') {
                         setLoginError('Invalid email or password.');
                     }
-                });
+                })
+                .finally(() => {
+                    setLoading(false)
+                })
         }
     }
 
