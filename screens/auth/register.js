@@ -99,7 +99,6 @@ export default function Splash({ navigation }) {
         setLinkMessageVisible(true)
         const match = await user.updateProfile({
             displayName: fullName,
-            photoURL: 'https://i.ibb.co/Fmv63nx/dummy-Photo.png'
         });
         const databasee = await database.collection('users').doc(user.uid).set({
             displayName: fullName,
