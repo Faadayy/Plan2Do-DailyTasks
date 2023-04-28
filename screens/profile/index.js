@@ -9,36 +9,15 @@ import { useEffect, useState } from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons.js';
 import Ionicons from 'react-native-vector-icons/Ionicons.js';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons.js';
 import Modal from "react-native-modal";
 import auth from '@react-native-firebase/auth';
 import { CommonActions } from '@react-navigation/native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { firebase } from '@react-native-firebase/storage';
 
-const nowDate = () => {
-    const d = new Date();
-    let second = d.getSeconds();
-    let minute = d.getMinutes();
-    let hour = d.getHours();
-    return { second, minute, hour };
-};
 
-const nowTimer = () => {
-    const { second, minute, hour } = nowDate();
-    const [state, setState] = useState({
-        second,
-        minute,
-        hour,
-    });
 
-    useEffect(() => {
-        setInterval(() => {
-            const { second, minute, hour } = nowDate();
-            setState({ second, minute, hour });
-        }, 1000);
-    }, [useState]);
-    return state;
-};
 
 export default function DashBoard({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
@@ -136,74 +115,30 @@ export default function DashBoard({ navigation }) {
         }
     }
 
-    const updateImage = () => {
-        const options = {
-            title: 'Select Avatar',
-            storageOptions: {
-                skipBackup: true,
-                path: 'images',
-            },
-        };
-        const result = launchImageLibrary(options, (response) => {
-            console.log('Response = ', response.assets[0]);
 
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else {
-                const uri = response.assets[0].uri;
-                let uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
-                let imageName = `profile--${auth().currentUser.uid}-${Math.random()}`;
-
-                setPhotoUri(uploadUri)
-                setPhotoName(imageName)
-            }
-
-            // firebase
-            //     .storage()
-            //     .ref(photoName)
-            //     .putFile(photoUri)
-            //     .then((snapshot) => {
-            //         //You can check the image is now uploaded in the storage bucket
-            //         console.log(`${imageName} has been successfully uploaded.`);
-            //     })
-            //     .catch((e) => console.log('uploading image error => ', e));
-        });
-
-
-        // You can also use as a promise without 'callback':
-    }
 
 
     const data = {
         name: auth().currentUser?.displayName,
         email: auth().currentUser?.email,
-        picture: auth().currentUser?.photoURL,
         todos: [{}]
     }
     return (
         <View style={styles.container}>
             <View style={styles.upperHalf}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={{ alignSelf: 'flex-start', padding: 10, marginBottom: -20 }}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={{ alignSelf: 'flex-start', padding: 10, }}>
                     <Ionicons style={{ marginBottom: 4, marginRight: 9, }} name="arrow-back-circle" size={40} color="#D8605B" />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.imageContainer} onPress={updateImage}>
-                    <Image style={styles.image} source={{ uri: data.picture }} />
-                </TouchableOpacity>
-                <View>
+                <View style={{ marginTop: 10 }}>
                     <Text style={styles.nameText}>{data.name}</Text>
                     <Text style={styles.emailText}>{data.email}</Text>
                 </View>
-                <TouchableOpacity onPress={() => setLogoutModalVisible(true)} style={styles.logoutButton}>
-                    <Text style={styles.logoutText}>Logout</Text>
-                </TouchableOpacity>
             </View>
 
             <View style={styles.lowerHalf}>
                 <TouchableOpacity style={styles.optionsProfile} onPress={updateName}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <FontAwesome5 style={{ marginBottom: 4, marginRight: 9, }} name="key" size={22} color="#D8605B" />
+                        <MaterialCommunityIcons style={{ marginBottom: 4, marginRight: 9, }} name="rename-box" size={26} color="#D8605B" />
                         <View style={{ paddingLeft: 0, }}>
                             <Text style={styles.headerText}>Update Name</Text>
                         </View>
@@ -211,9 +146,33 @@ export default function DashBoard({ navigation }) {
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.optionsProfile} onPress={updatePass}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <MaterialCommunityIcons style={{ marginBottom: 4, marginRight: 9, }} name="rename-box" size={26} color="#D8605B" />
+                        <FontAwesome5 style={{ marginBottom: 4, marginRight: 9, }} name="key" size={22} color="#D8605B" />
                         <View style={{ paddingLeft: 0, }}>
                             <Text style={styles.headerText}>Update Password</Text>
+                        </View>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.optionsProfile} onPress={() => navigation.navigate('PrivacyPolicy')}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <MaterialIcons style={{ marginBottom: 4, marginRight: 9, }} name="policy" size={26} color="#D8605B" />
+                        <View style={{ paddingLeft: 0, }}>
+                            <Text style={styles.headerText}>Privacy Policy</Text>
+                        </View>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.optionsProfile} onPress={() => setLogoutModalVisible(true)}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <MaterialIcons style={{ marginBottom: 4, marginRight: 9, }} name="notifications" size={26} color="#D8605B" />
+                        <View style={{ paddingLeft: 0, }}>
+                            <Text style={styles.headerText}>Push Notifications</Text>
+                        </View>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.optionsProfile} onPress={() => setLogoutModalVisible(true)}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <MaterialCommunityIcons style={{ marginBottom: 4, marginRight: 9, }} name="logout" size={26} color="#D8605B" />
+                        <View style={{ paddingLeft: 0, }}>
+                            <Text style={styles.headerText}>Logout</Text>
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -310,6 +269,7 @@ const styles = StyleSheet.create({
     upperHalf: {
         flex: 1,
         backgroundColor: 'rgba(244, 194, 127, 1)',
+
         // width: scale(width),
         // justifyContent: 'center',
         alignItems: 'center',
@@ -328,7 +288,7 @@ const styles = StyleSheet.create({
     nameText: {
         fontFamily: 'Poppins-Medium',
         textAlign: 'center',
-        fontSize: scale(25),
+        fontSize: scale(30),
 
     },
     emailText: {
@@ -358,7 +318,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     lowerHalf: {
-        flex: 1.2,
+        flex: 4,
         backgroundColor: '#fff',
     },
     headerText: {

@@ -7,7 +7,8 @@ import ToDoList from './todoList.js';
 // import Modal from "react-native-modal";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/Fontisto';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons.js';
+import Ionicons from 'react-native-vector-icons/Ionicons.js';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons.js';
 import DoneList from './doneList.js';
 import { KeyboardAwareFlatList, KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Modal from "react-native-modal";
@@ -117,7 +118,6 @@ export default function DashBoard({ navigation }) {
 
 
 
-    { console.log('This is complete list', tasks) }
 
 
     const timeGreetings = () => {
@@ -231,19 +231,21 @@ export default function DashBoard({ navigation }) {
     return (
         <View keyboardShouldPersistTaps={'handled'} style={styles.container}>
             <View style={styles.imageContainer}>
-                <View style={{ marginVertical: 10, flex: 8 }}>
-                    <Text style={styles.greetingsText}>{`${timeGreetings() + ", " + getName()}`}</Text>
+                <View style={{ flex: 1, marginTop: 4 }}>
+                    <Text style={styles.headerText2}>Plan2Do</Text>
                 </View>
                 <View style={{
-                    flex: 1, borderRadius: 100,
-                    borderWidth: 1,
+                    borderRadius: 100,
                     borderColor: '#D8605B',
                     padding: 2,
                 }}>
-                    <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-                        <Image style={styles.image} source={{ uri: auth().currentUser.photoURL }} />
+                    <TouchableOpacity style={{}} onPress={() => navigation.navigate('Profile')}>
+                        <Ionicons name="ios-settings" size={26} color="#D8605B" />
                     </TouchableOpacity>
                 </View>
+            </View>
+            <View style={{ marginVertical: 10, }}>
+                <Text style={styles.greetingsText}>{`${timeGreetings() + ", " + getName()}`}</Text>
             </View>
 
             <View style={styles.middleHalf}>
@@ -403,12 +405,10 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'center',
-        // backgroundColor: 'red',
-        borderRadius: 100,
+        justifyContent: 'space-between',
+        backgroundColor: 'rgba(244, 194, 127, 1)',
         padding: 7,
-        marginBottom: 10,
         borderColor: '#D8605B'
     },
     image: {
@@ -419,7 +419,7 @@ const styles = StyleSheet.create({
     nameText: {
         fontFamily: 'Poppins-Medium',
         textAlign: 'center',
-        fontSize: scale(25),
+        fontSize: scale(20),
     },
     inputfields: {
         backgroundColor: '#fff',
@@ -512,6 +512,11 @@ const styles = StyleSheet.create({
     headerText: {
         fontFamily: 'Poppins-SemiBold',
         fontSize: scale(20)
+    },
+    headerText2: {
+        fontFamily: 'Poppins-Bold',
+        fontSize: scale(20),
+        color: '#000'
     },
     todolist: {
         flex: 1,

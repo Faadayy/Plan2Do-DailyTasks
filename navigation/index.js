@@ -10,6 +10,7 @@ import Register from "../screens/auth/register";
 import Splash from "../screens/splash/splash";
 import DashBoard from "../screens/dashboard/home";
 import Profile from "../screens/profile/index";
+import PrivacyPolicy from "../screens/others/privacyPolicy";
 
 
 export default function Navigation() {
@@ -32,6 +33,7 @@ function RootNavigator() {
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="DashBoard" component={DashBoard} />
       <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
     </Stack.Navigator>
   );
 }
