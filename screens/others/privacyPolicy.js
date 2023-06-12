@@ -36,10 +36,10 @@ export default function PrivacyPolicyScreen() {
                 <Text style={styles.text}>
                     We reserve the right to modify or update this Privacy Policy from time to time, and will post the updated Privacy Policy on this page. We encourage you to review this Privacy Policy periodically to stay informed about our information practices and your rights to privacy.
                 </Text>
-                <Text style={styles.subTitle}>Contact Us</Text>
+                {/* <Text style={styles.subTitle}>Contact Us</Text>
                 <Text style={styles.text}>
                     If you have any questions or concerns about this Privacy Policy, please contact us at privacy@mytodoapp.com.
-                </Text>
+                </Text> */}
             </View>
         </ScrollView>
     );

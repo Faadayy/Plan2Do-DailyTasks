@@ -10,7 +10,7 @@ export default function Splash({ navigation }) {
 
 
     const handleButton = () => {
-        navigation.navigate('Register')
+        navigation.navigate('Login')
     }
 
     // Handle user state changes
@@ -21,7 +21,7 @@ export default function Splash({ navigation }) {
 
     useEffect(() => {
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-        return subscriber; // unsubscribe on unmount
+        return subscriber;
     }, []);
 
 

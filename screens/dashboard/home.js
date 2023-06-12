@@ -8,7 +8,7 @@ import ToDoList from './todoList.js';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/Fontisto';
 import Ionicons from 'react-native-vector-icons/Ionicons.js';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons.js';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons.js';
 import DoneList from './doneList.js';
 import { KeyboardAwareFlatList, KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Modal from "react-native-modal";
@@ -334,58 +334,59 @@ export default function DashBoard({ navigation }) {
 
 
 
-            {modalData && <Modal isVisible={modalVisible} onBackdropPress={() => setModalVisible(false)} onBackButtonPress={() => setModalVisible(false)}>
-                <View style={styles.middleHalf}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
-                        <Text style={[styles.greetingsText, { marginTop: 5 }]}>Task Details</Text>
-                        <TouchableOpacity onPress={() => deleteTask(modalData)}>
-                            <MaterialCommunityIcons style={{ marginRight: 9, }} name="delete-outline" size={30} color="red" />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ marginTop: scale(10) }}>
-                        <Text style={styles.titleHeaderText}>Title</Text>
-                        <TextInput
-                            onChangeText={text => setTaskHeader(text)}
-                            value={modalData.title}
-                            placeholder="Enter Task"
-                            style={styles.inputfields}
-                            maxLength={30}
-                            editable={false}
-                        />
-                    </View>
-                    <View style={{ marginTop: scale(10) }}>
-                        <Text style={styles.titleHeaderText}>Description</Text>
-                        <TextInput
-                            onChangeText={text => setTaskDescription(text)}
-                            value={modalData.description}
-                            placeholder="Enter Description"
-                            style={[styles.inputfields2, { height: scale(100), textAlignVertical: 'top', }]}
-                            maxLength={100}
-                            multiline={true}
-                            numberOfLines={3}
-                            editable={false}
+            {modalData &&
+                <Modal isVisible={modalVisible} onBackdropPress={() => setModalVisible(false)} onBackButtonPress={() => setModalVisible(false)}>
+                    <View style={styles.middleHalf}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
+                            <Text style={[styles.greetingsText, { marginTop: 5 }]}>Task Details</Text>
+                            <TouchableOpacity onPress={() => deleteTask(modalData)}>
+                                <MaterialCommunityIcons style={{}} name="delete-outline" size={30} color="red" />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{ marginTop: scale(10) }}>
+                            <Text style={styles.titleHeaderText}>Title</Text>
+                            <TextInput
+                                onChangeText={text => setTaskHeader(text)}
+                                value={modalData.title}
+                                placeholder="Enter Task"
+                                style={styles.inputfields}
+                                maxLength={30}
+                                editable={false}
+                            />
+                        </View>
+                        <View style={{ marginTop: scale(10) }}>
+                            <Text style={styles.titleHeaderText}>Description</Text>
+                            <TextInput
+                                onChangeText={text => setTaskDescription(text)}
+                                value={modalData.description}
+                                placeholder="Enter Description"
+                                style={[styles.inputfields2, { height: scale(100), textAlignVertical: 'top', }]}
+                                maxLength={100}
+                                multiline={true}
+                                numberOfLines={3}
+                                editable={false}
 
-                        />
-                    </View>
-                    <View style={styles.DatenButtonContainer}>
-                        <TouchableOpacity
-                            onPress={showDatepicker}
-                            style={[styles.datePickerButton, { flex: 1 }]}
-                            disabled={true}
-                        >
-                            <Icon style={{ marginRight: 9, }} name="date" size={20} color="black" />
+                            />
+                        </View>
+                        <View style={styles.DatenButtonContainer}>
+                            <TouchableOpacity
+                                onPress={showDatepicker}
+                                style={[styles.datePickerButton, { flex: 1 }]}
+                                disabled={true}
+                            >
+                                <Icon style={{ marginRight: 9, }} name="date" size={20} color="black" />
 
-                            <Text style={styles.datePickerText}>{new Date(modalData.dateData).toDateString()}</Text>
-                        </TouchableOpacity>
-                    </View>
-                    {!modalData.done && <View style={styles.DatenButtonContainer}>
-                        <TouchableOpacity onPress={() => { updateData(modalData) }} style={[styles.addTaskButton, { flex: 1, paddingHorizontal: 5 }]}>
-                            <Text style={styles.taskButtonText}>Mark as Done</Text>
-                        </TouchableOpacity>
-                    </View>}
+                                <Text style={styles.datePickerText}>{new Date(modalData.dateData).toDateString()}</Text>
+                            </TouchableOpacity>
+                        </View>
+                        {!modalData.done && <View style={styles.DatenButtonContainer}>
+                            <TouchableOpacity onPress={() => { updateData(modalData) }} style={[styles.addTaskButton, { flex: 1, paddingHorizontal: 5 }]}>
+                                <Text style={styles.taskButtonText}>Mark as Done</Text>
+                            </TouchableOpacity>
+                        </View>}
 
-                </View>
-            </Modal>}
+                    </View>
+                </Modal>}
         </View >
     );
 }

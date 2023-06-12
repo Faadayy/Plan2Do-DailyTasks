@@ -11,6 +11,7 @@ export default function Login({ navigation }) {
 
     //UsesStates
     const [email, setEmail] = useState('');
+    const [forgotEmail, setForgotEmail] = useState('');
     const [password, setPassword] = useState('');
 
 
@@ -21,7 +22,10 @@ export default function Login({ navigation }) {
     const [serverError, setServerError] = useState(false)
     const [serverErrorMessage, setServerErrorMessage] = useState("")
     const [loginError, setLoginError] = useState()
+    const [forgotEmailError, setForgotEmailError] = useState(false);
     const [loading, setLoading] = useState(false)
+    const [forgotPassMode, setForgotPassMode] = useState(true)
+    const [invalidEmail, setInvalidEmail] = useState(false)
 
 
     useEffect(() => {
@@ -111,6 +115,23 @@ export default function Login({ navigation }) {
         setEmail("")
         setPassword("")
         setServerErrorMessage("")
+        setForgotPassMode(false)
+        setForgotEmailError(false)
+    }
+
+    const handleForgotPassword = async () => {
+        setLoading(true)
+        setInvalidEmail(false)
+        if (forgotEmail) {
+            if (validator.isEmail(forgotEmail)) {
+                await auth().sendPasswordResetEmail('youali08@gmail.com')
+                setForgotEmailError(true)
+                setForgotEmail('')
+            } else {
+                setInvalidEmail(true)
+            }
+        }
+        setLoading(false)
     }
 
     return (
@@ -118,7 +139,7 @@ export default function Login({ navigation }) {
             // style={{ flex: 1, backgroundColor: '#F4C27F' }}
             style={styles.container}
         >
-            <View style={styles.container}>
+            {!forgotPassMode && <View style={styles.container}>
                 <View style={{ justifyContent: 'center', alignItems: 'center', }}>
                     <View >
                         <Image source={require('../../assets/images/Done.png')} style={styles.image} />
@@ -165,9 +186,8 @@ export default function Login({ navigation }) {
                 </View>}
                 <View style={{ alignSelf: 'flex-end', width: scale(200) }}>
                     <View style={[styles.registerButtonContainer, {}]}>
-                        <TouchableOpacity style={[styles.registerbuttonDesign, { alignItems: 'flex-end' }]} onPress={() => { }}>
+                        <TouchableOpacity style={[styles.registerbuttonDesign, { alignItems: 'flex-end' }]} onPress={() => setForgotPassMode(true)}>
                             <Text style={[styles.registerbuttonText, {}]}>Forgot Password ?</Text>
-                            {/* <Text style={[styles.registerbuttonText, { color: '#D8605B', fontFamily: 'Poppins-Bold', fontSize: scale(15) }]}>Sign Up</Text> */}
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -183,14 +203,70 @@ export default function Login({ navigation }) {
                     }
                     <View style={styles.registerButtonContainer}>
                         <Text style={styles.registerbuttonText}>Don’t have an account ? </Text>
-                        <TouchableOpacity style={styles.registerbuttonDesign} onPress={() => navigation.navigate('Register')}>
+                        <TouchableOpacity style={styles.registerbuttonDesign} onPress={() => {
+                            navigation.navigate('Register')
+                            clearFields()
+                        }}>
                             <Text style={[styles.registerbuttonText, { color: '#D8605B', fontFamily: 'Poppins-Bold', fontSize: scale(15) }]}>Sign Up</Text>
                         </TouchableOpacity>
 
 
                     </View>
                 </View>
-            </View>
+            </View>}
+
+            {forgotPassMode && <View>
+                <View style={styles.container}>
+                    <View style={{ justifyContent: 'center', alignItems: 'center', }}>
+                        <View >
+                            <Image source={require('../../assets/images/Done.png')} style={styles.image} />
+                        </View>
+                        <View>
+                            <View style={styles.uppertextContainer}>
+                                <Text style={[styles.uppertext, { marginBottom: scale(-10) }]}>Welcome back </Text>
+                                <Text style={[styles.uppertext, { marginBottom: scale(-10) }]}>to </Text>
+                                <Text style={[styles.uppertext, { fontSize: scale(30) }]}>Plan2Do</Text>
+                            </View>
+                            <View style={styles.descriptionContainer}>
+                            </View>
+                        </View>
+                        <View>
+                            <TextInput
+                                onChangeText={text => setForgotEmail(text)}
+                                value={forgotEmail}
+                                style={styles.inputfields}
+                                placeholder="Enter your email"
+                                placeholderTextColor={'#000'}
+                            />
+                        </View>
+                    </View>
+                    <View style={styles.buttonContainer}>
+                        {!loading ?
+                            <TouchableOpacity style={styles.buttonDesign} onPress={handleForgotPassword}>
+                                <Text style={styles.buttonText}>Send Link</Text>
+                            </TouchableOpacity>
+                            :
+                            <TouchableOpacity style={styles.buttonDesign} disabled={loading}>
+                                <ActivityIndicator size={'large'} color={'white'} />
+                            </TouchableOpacity>
+                        }
+                        {forgotEmailError && <Text style={[styles.errorMessages, { width: '70%', marginTop: 10 }]}>The password reset email link has been sent to your entered email.</Text>}
+                        {invalidEmail && <Text style={[styles.errorMessages, { width: '70%', marginTop: 10 }]}>Invalid Email. Please enter a valid email.</Text>}
+
+                        <View style={styles.registerButtonContainer}>
+                            <Text style={styles.registerbuttonText}>Don’t have an account ? </Text>
+                            <TouchableOpacity style={styles.registerbuttonDesign} onPress={() => {
+                                navigation.navigate('Register')
+                                clearFields()
+                            }}>
+                                <Text style={[styles.registerbuttonText, { color: '#D8605B', fontFamily: 'Poppins-Bold', fontSize: scale(15) }]}>Sign Up</Text>
+                            </TouchableOpacity>
+
+
+                        </View>
+                    </View>
+                </View>
+            </View>}
         </KeyboardAwareScrollView >
     );
 }

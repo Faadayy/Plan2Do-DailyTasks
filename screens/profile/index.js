@@ -160,14 +160,14 @@ export default function DashBoard({ navigation }) {
                         </View>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.optionsProfile} onPress={() => setLogoutModalVisible(true)}>
+                {/* <TouchableOpacity style={styles.optionsProfile} onPress={() => setLogoutModalVisible(true)}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <MaterialIcons style={{ marginBottom: 4, marginRight: 9, }} name="notifications" size={26} color="#D8605B" />
                         <View style={{ paddingLeft: 0, }}>
                             <Text style={styles.headerText}>Push Notifications</Text>
                         </View>
                     </View>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <TouchableOpacity style={styles.optionsProfile} onPress={() => setLogoutModalVisible(true)}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <MaterialCommunityIcons style={{ marginBottom: 4, marginRight: 9, }} name="logout" size={26} color="#D8605B" />
@@ -178,6 +178,10 @@ export default function DashBoard({ navigation }) {
                 </TouchableOpacity>
             </View>
 
+            <View style={styles.footerView}>
+                <Text style={styles.footerText}>Version: 1.0.1</Text>
+                <Text style={styles.footerText}>Powered by TECHNONUS</Text>
+            </View>
             <Modal isVisible={modalVisible} onBackButtonPress={() => setModalVisible(false)} onBackdropPress={() => setModalVisible(false)}>
                 <View style={styles.middleHalf}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
@@ -239,7 +243,7 @@ export default function DashBoard({ navigation }) {
                     </View>
 
                     <View style={[styles.DatenButtonContainer, { justifyContent: 'space-around' }]}>
-                        <TouchableOpacity onPress={() => { }} style={[styles.logoutModalButtons, {}]}>
+                        <TouchableOpacity onPress={() => { setLogoutModalVisible(false) }} style={[styles.logoutModalButtons, {}]}>
                             <Text style={styles.taskButtonText}>No</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={handleLogout} style={[styles.logoutModalButtons, {}]}>
@@ -455,4 +459,14 @@ const styles = StyleSheet.create({
         marginTop: 3,
         fontSize: scale(14)
     },
+    footerView: {
+        marginBottom: 20
+    },
+    footerText: {
+        color: '#D8605B',
+        fontFamily: 'Poppins-SemiBold',
+        marginTop: 3,
+        fontSize: scale(14),
+        textAlign: 'center'
+    }
 });
